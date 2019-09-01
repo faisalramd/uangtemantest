@@ -25,6 +25,6 @@ class MainPresenter: MainContract.Presenter {
     }
 
     override fun onDrawerOptionAboutClick() {
-        view.showAboutFragment()
+        view.showAddContactFragment()
     }
 }

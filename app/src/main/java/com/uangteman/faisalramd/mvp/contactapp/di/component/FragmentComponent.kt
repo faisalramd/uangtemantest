@@ -1,8 +1,8 @@
 package com.uangteman.faisalramd.mvp.contactapp.di.component
 
 import com.uangteman.faisalramd.mvp.contactapp.di.module.FragmentModule
-import com.uangteman.faisalramd.mvp.contactapp.ui.about.AboutFragment
-import com.uangteman.faisalramd.mvp.contactapp.ui.list.ListFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.AddContactFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.ContactFragment
 import dagger.Component
 
 /**
@@ -12,8 +12,8 @@ import dagger.Component
 @Component(modules = arrayOf(FragmentModule::class))
 interface FragmentComponent {
 
-    fun inject(aboutFragment: AboutFragment)
+    fun inject(addContactFragment: AddContactFragment)
 
-    fun inject(listFragment: ListFragment)
+    fun inject(listFragment: ContactFragment)
 
 }

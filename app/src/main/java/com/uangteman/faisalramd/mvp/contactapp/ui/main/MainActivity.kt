@@ -7,8 +7,8 @@ import android.view.MenuItem
 import com.uangteman.faisalramd.mvp.contactapp.R
 import com.uangteman.faisalramd.mvp.contactapp.di.component.DaggerActivityComponent
 import com.uangteman.faisalramd.mvp.contactapp.di.module.ActivityModule
-import com.uangteman.faisalramd.mvp.contactapp.ui.about.AboutFragment
-import com.uangteman.faisalramd.mvp.contactapp.ui.list.ListFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.AddContactFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.ContactFragment
 import javax.inject.Inject
 
 /**
@@ -32,12 +32,12 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         test()
     }
 
-    override fun showAboutFragment() {
-        if (supportFragmentManager.findFragmentByTag(AboutFragment.TAG) == null) {
+    override fun showAddContactFragment() {
+        if (supportFragmentManager.findFragmentByTag(AddContactFragment.TAG) == null) {
             supportFragmentManager.beginTransaction()
                     .addToBackStack(null)
                     .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
-                    .replace(R.id.frame, AboutFragment().newInstance(), AboutFragment.TAG)
+                    .replace(R.id.frame, AddContactFragment().newInstance(), AddContactFragment.TAG)
                     .commit()
         } else {
             // Maybe an animation like shake hello text
@@ -48,7 +48,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         supportFragmentManager.beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
-                .replace(R.id.frame, ListFragment().newInstance(), ListFragment.TAG)
+                .replace(R.id.frame, ContactFragment().newInstance(), ContactFragment.TAG)
                 .commit()
     }
 
@@ -73,7 +73,7 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     override fun onBackPressed() {
         val fragmentManager = supportFragmentManager
-        val fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG)
+        val fragment = fragmentManager.findFragmentByTag(AddContactFragment.TAG)
 
         if (fragment == null) {
             super.onBackPressed()

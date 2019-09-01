@@ -9,8 +9,8 @@ import com.uangteman.faisalramd.mvp.contactapp.ui.base.BaseContract
 class MainContract {
 
     interface View: BaseContract.View {
-        fun showAboutFragment()
         fun showListFragment()
+        fun showAddContactFragment()
     }
 
     interface Presenter: BaseContract.Presenter<View> {

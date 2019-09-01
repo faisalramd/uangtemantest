@@ -1,4 +1,4 @@
-package com.uangteman.faisalramd.mvp.contactapp.ui.list
+package com.uangteman.faisalramd.mvp.contactapp.ui.contact
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
@@ -10,19 +10,18 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.uangteman.faisalramd.mvp.contactapp.R
 import com.uangteman.faisalramd.mvp.contactapp.models.Contact
-import com.uangteman.faisalramd.mvp.contactapp.models.Post
 
 /**
  * Created by ogulcan on 07/02/2018.
  * modified by faisalramd on 01/09/2019
  */
-class ListAdapter(private val context: Context, private val list: MutableList<Contact>,
-                  fragment: Fragment): RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class ContactAdapter(private val context: Context, private val list: MutableList<Contact>,
+                     fragment: Fragment): RecyclerView.Adapter<ContactAdapter.ListViewHolder>() {
 
-    private val listener: ListAdapter.onItemClickListener
+    private val listener: onItemClickListener
 
     init {
-        this.listener = fragment as ListAdapter.onItemClickListener
+        this.listener = fragment as onItemClickListener
     }
 
 
@@ -38,13 +37,13 @@ class ListAdapter(private val context: Context, private val list: MutableList<Co
         holder.body!!.setText(post.photo)
 
         holder.layout!!.setOnClickListener {
-            listener.itemDetail(post.id.toString()!!)
+            listener.itemDetail(post.id)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.item_layout, parent, false)
-        return ListAdapter.ListViewHolder(itemView)
+        return ListViewHolder(itemView)
     }
 
     fun removeAt(position: Int) {
@@ -57,14 +56,14 @@ class ListAdapter(private val context: Context, private val list: MutableList<Co
         val title = itemView.findViewById<TextView>(R.id.item_title)
         val body = itemView.findViewById<TextView>(R.id.item_body)
 
-        fun bind(item: Post) {
+        fun bind(item: Contact) {
             // title = item.post
             // body etc.
         }
     }
 
     interface onItemClickListener {
-        fun itemRemoveClick(post: Post)
+        fun itemRemoveClick(contact: Contact)
         fun itemDetail(postId : String)
     }
 }

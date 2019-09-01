@@ -1,36 +1,34 @@
-package com.uangteman.faisalramd.mvp.contactapp.ui.list
+package com.uangteman.faisalramd.mvp.contactapp.ui.contact
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.uangteman.faisalramd.mvp.contactapp.R
 import com.uangteman.faisalramd.mvp.contactapp.di.component.DaggerFragmentComponent
 import com.uangteman.faisalramd.mvp.contactapp.di.module.FragmentModule
 import com.uangteman.faisalramd.mvp.contactapp.models.Contact
-import com.uangteman.faisalramd.mvp.contactapp.models.DetailsViewModel
-import com.uangteman.faisalramd.mvp.contactapp.models.Post
 import com.uangteman.faisalramd.mvp.contactapp.util.SwipeToDelete
-import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_contact_list.*
 import javax.inject.Inject
 
 /**
  * Created by ogulcan on 07/02/2018.
  * modified by faisalramd on 01/09/2019
  */
-class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListener {
+class ContactFragment: Fragment(), ContactContract.View, ContactAdapter.onItemClickListener {
 
-    @Inject lateinit var presenter: ListContract.Presenter
+    @Inject lateinit var presenter: ContactContract.Presenter
 
     private lateinit var rootView: View
 
-    fun newInstance(): ListFragment {
-        return ListFragment()
+    fun newInstance(): ContactFragment {
+        return ContactFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +37,7 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater!!.inflate(R.layout.fragment_list, container, false)
+        rootView = inflater!!.inflate(R.layout.fragment_contact_list, container, false)
         return rootView
     }
 
@@ -64,17 +62,17 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
     }
 
     override fun showErrorMessage(error: String) {
-        Log.e("Error", error)
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
     override fun loadDataSuccess(list: List<Contact>) {
-        var adapter = ListAdapter(context!!, list.toMutableList(), this)
+        var adapter = ContactAdapter(context!!, list.toMutableList(), this)
         recyclerView!!.setLayoutManager(LinearLayoutManager(activity))
         recyclerView!!.setAdapter(adapter)
 
         val swipeHandler = object : SwipeToDelete(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val adapter = recyclerView.adapter as ListAdapter
+                val adapter = recyclerView.adapter as ContactAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
             }
         }
@@ -83,7 +81,9 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    override fun itemRemoveClick(post: Post) {
+    override fun saveDataSucess() { }
+
+    override fun itemRemoveClick(contact: Contact) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -104,6 +104,6 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
     }
 
     companion object {
-        val TAG: String = "ListFragment"
+        val TAG: String = "ContactFragment"
     }
 }

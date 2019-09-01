@@ -6,6 +6,8 @@ import io.reactivex.Observable
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 
 /**
@@ -21,20 +23,28 @@ interface ApiServiceInterface {
     fun getContacts(@Path("id") id: String): Observable<DefaultResponse<Contact>>
 
     @POST("contact")
-    fun addContacts(@Body body: Contact): Observable<DefaultResponse<Contact>>
+    fun addContacts(@Body body: ContactRequest): Observable<DefaultResponse<Contact>>
 
     @DELETE("contact/{id}")
     fun deleteContacts(@Path("id") id: String): Observable<DefaultResponse<Contact>>
 
     @PUT("contact")
-    fun editContacts(@Body body: Contact): Observable<DefaultResponse<Contact>>
+    fun editContacts(@Body body: ContactRequest): Observable<DefaultResponse<Contact>>
 
     companion object Factory {
         fun create(): ApiServiceInterface {
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BASIC
+
+            val client = OkHttpClient.Builder()
+                    .addInterceptor(logging)
+                    .build()
+
             val retrofit = retrofit2.Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(Constants.BASE_URL)
+                    .client(client)
                     .build()
 
             return retrofit.create(ApiServiceInterface::class.java)
