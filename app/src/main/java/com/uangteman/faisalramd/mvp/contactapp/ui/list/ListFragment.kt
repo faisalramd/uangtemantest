@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.uangteman.faisalramd.mvp.contactapp.R
 import com.uangteman.faisalramd.mvp.contactapp.di.component.DaggerFragmentComponent
 import com.uangteman.faisalramd.mvp.contactapp.di.module.FragmentModule
+import com.uangteman.faisalramd.mvp.contactapp.models.Contact
 import com.uangteman.faisalramd.mvp.contactapp.models.DetailsViewModel
 import com.uangteman.faisalramd.mvp.contactapp.models.Post
 import com.uangteman.faisalramd.mvp.contactapp.util.SwipeToDelete
@@ -66,7 +67,7 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
         Log.e("Error", error)
     }
 
-    override fun loadDataSuccess(list: List<Post>) {
+    override fun loadDataSuccess(list: List<Contact>) {
         var adapter = ListAdapter(context!!, list.toMutableList(), this)
         recyclerView!!.setLayoutManager(LinearLayoutManager(activity))
         recyclerView!!.setAdapter(adapter)
@@ -80,10 +81,6 @@ class ListFragment: Fragment(), ListContract.View, ListAdapter.onItemClickListen
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
-    override fun loadDataAllSuccess(model: DetailsViewModel) {
-        print(model.toJson())
     }
 
     override fun itemRemoveClick(post: Post) {

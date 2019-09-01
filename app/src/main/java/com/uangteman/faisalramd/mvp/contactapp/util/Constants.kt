@@ -6,6 +6,6 @@ package com.uangteman.faisalramd.mvp.contactapp.util
  */
 class Constants {
     companion object {
-        const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+        const val BASE_URL = "https://simple-contact-crud.herokuapp.com/"
     }
 }

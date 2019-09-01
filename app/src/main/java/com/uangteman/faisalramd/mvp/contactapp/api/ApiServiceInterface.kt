@@ -1,15 +1,12 @@
 package com.uangteman.faisalramd.mvp.contactapp.api
 
-import com.uangteman.faisalramd.mvp.contactapp.models.Album
-import com.uangteman.faisalramd.mvp.contactapp.models.Post
-import com.uangteman.faisalramd.mvp.contactapp.models.User
+import com.uangteman.faisalramd.mvp.contactapp.models.*
 import com.uangteman.faisalramd.mvp.contactapp.util.Constants
 import io.reactivex.Observable
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
+
 
 /**
  * Created by ogulcan on 07/02/2018.
@@ -17,32 +14,20 @@ import retrofit2.http.Path
  */
 interface ApiServiceInterface {
 
-    @GET("albums")
-    fun getAlbumList(): Observable<List<Album>>
+    @GET("contact")
+    fun getContacts(): Observable<DefaultResponse<Contact>>
 
-    @GET("albums/{id}")
-    fun getAlbum(@Path("id") id: Int): Observable<Album>
+    @GET("contact/{id}")
+    fun getContacts(@Path("id") id: String): Observable<DefaultResponse<Contact>>
 
-    @DELETE("albums/{id}")
-    fun deleteAlbum(@Path("id") id: Int)
+    @POST("contact")
+    fun addContacts(@Body body: Contact): Observable<DefaultResponse<Contact>>
 
-    @GET("posts")
-    fun getPostList(): Observable<List<Post>>
+    @DELETE("contact/{id}")
+    fun deleteContacts(@Path("id") id: String): Observable<DefaultResponse<Contact>>
 
-    @GET("posts/{id}")
-    fun getPost(@Path("id") id: Int): Observable<Post>
-
-    @DELETE("albums/{id}")
-    fun deletePost(@Path("id") id: Int)
-
-    @GET("users")
-    fun getUserList(): Observable<List<User>>
-
-    @GET("posts/{id}")
-    fun getUser(@Path("id") id: Int): Observable<User>
-
-    @DELETE("albums/{id}")
-    fun deleteUser(@Path("id") id: Int)
+    @PUT("contact")
+    fun editContacts(@Body body: Contact): Observable<DefaultResponse<Contact>>
 
     companion object Factory {
         fun create(): ApiServiceInterface {

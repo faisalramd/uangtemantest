@@ -9,13 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.uangteman.faisalramd.mvp.contactapp.R
+import com.uangteman.faisalramd.mvp.contactapp.models.Contact
 import com.uangteman.faisalramd.mvp.contactapp.models.Post
 
 /**
  * Created by ogulcan on 07/02/2018.
  * modified by faisalramd on 01/09/2019
  */
-class ListAdapter(private val context: Context, private val list: MutableList<Post>,
+class ListAdapter(private val context: Context, private val list: MutableList<Contact>,
                   fragment: Fragment): RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     private val listener: ListAdapter.onItemClickListener
@@ -33,8 +34,8 @@ class ListAdapter(private val context: Context, private val list: MutableList<Po
         var post = list[position]
 
         // holder!!.bind(post)
-        holder!!.title!!.setText(post.title)
-        holder.body!!.setText(post.body)
+        holder.title!!.setText(post.firstName)
+        holder.body!!.setText(post.photo)
 
         holder.layout!!.setOnClickListener {
             listener.itemDetail(post.id.toString()!!)

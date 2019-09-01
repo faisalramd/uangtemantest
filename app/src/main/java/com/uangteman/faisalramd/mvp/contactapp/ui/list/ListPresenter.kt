@@ -1,10 +1,7 @@
 package com.uangteman.faisalramd.mvp.contactapp.ui.list
 
 import com.uangteman.faisalramd.mvp.contactapp.api.ApiServiceInterface
-import com.uangteman.faisalramd.mvp.contactapp.models.Album
-import com.uangteman.faisalramd.mvp.contactapp.models.DetailsViewModel
-import com.uangteman.faisalramd.mvp.contactapp.models.Post
-import com.uangteman.faisalramd.mvp.contactapp.models.User
+import com.uangteman.faisalramd.mvp.contactapp.models.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -34,30 +31,12 @@ class ListPresenter: ListContract.Presenter {
     }
 
     override fun loadData() {
-        var subscribe = api.getPostList().subscribeOn(Schedulers.io())
+        var subscribe = api.getContacts().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ list: List<Post>? ->
+                .subscribe({ response: DefaultResponse<Contact>? ->
                     view.showProgress(false)
-                    view.loadDataSuccess(list!!.take(10))
+                    view.loadDataSuccess(response!!.data!!)
                 }, { error ->
-                    view.showProgress(false)
-                    view.showErrorMessage(error.localizedMessage)
-                })
-
-        subscriptions.add(subscribe)
-    }
-
-    override fun loadDataAll() {
-        var subscribe = Observable.zip(api.getPostList(), api.getUserList(), api.getAlbumList(),
-                Function3<List<Post>, List<User>, List<Album>, DetailsViewModel> {
-                    posts, users, albums ->
-                    createDetailsViewModel(posts, users, albums)
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ model: DetailsViewModel? ->
-                    view.showProgress(false)
-                    view.loadDataAllSuccess(model!!)
-                },{ error ->
                     view.showProgress(false)
                     view.showErrorMessage(error.localizedMessage)
                 })
