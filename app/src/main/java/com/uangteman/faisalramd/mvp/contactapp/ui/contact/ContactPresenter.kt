@@ -48,7 +48,7 @@ class ContactPresenter: ContactContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response: DefaultResponse<Contact>? ->
                     view.showProgress(false)
-                    view.saveDataSucess()
+                    view.saveDataSuccess()
                 }, { error ->
                     view.showProgress(false)
                     view.showErrorMessage(error.localizedMessage)
@@ -57,7 +57,19 @@ class ContactPresenter: ContactContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-    override fun deleteItem(contact: ContactRequest) {
-        //api.deleteUser(item.id)
+    override fun deleteItem(id: String) {
+        view.showProgress(true)
+        val subscribe = api.deleteContacts(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response: DefaultResponse<Contact>? ->
+                    view.showProgress(false)
+                    view.saveDataSuccess()
+                }, { error ->
+                    view.showProgress(false)
+                    view.showErrorMessage(error.localizedMessage)
+                })
+
+        subscriptions.add(subscribe)
     }
 }

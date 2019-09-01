@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,10 +82,11 @@ class ContactFragment: Fragment(), ContactContract.View, ContactAdapter.onItemCl
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
-    override fun saveDataSucess() { }
+    override fun saveDataSuccess() { }
 
     override fun itemRemoveClick(contact: Contact) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.e("ss", "sss" + contact.firstName)
+        presenter.deleteItem(contact.id)
     }
 
     override fun itemDetail(postId: String) {

@@ -60,7 +60,7 @@ class AddContactFragment: Fragment(), ContactContract.View {
 
     override fun loadDataSuccess(list: List<Contact>) { }
 
-    override fun saveDataSucess() {
+    override fun saveDataSuccess() {
         etFirstName.setText("")
         etLastName.setText("")
         etAge.setText("")

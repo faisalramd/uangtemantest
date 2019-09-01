@@ -14,12 +14,12 @@ class ContactContract {
         fun showProgress(show: Boolean)
         fun showErrorMessage(error: String)
         fun loadDataSuccess(list: List<Contact>)
-        fun saveDataSucess()
+        fun saveDataSuccess()
     }
 
     interface Presenter: BaseContract.Presenter<View> {
         fun loadData()
-        fun deleteItem(item: ContactRequest)
+        fun deleteItem(id: String)
         fun addData(contact: ContactRequest)
     }
 }

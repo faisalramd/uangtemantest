@@ -33,8 +33,8 @@ class ContactAdapter(private val context: Context, private val list: MutableList
         var post = list[position]
 
         // holder!!.bind(post)
-        holder.title!!.setText(post.firstName)
-        holder.body!!.setText(post.photo)
+        holder.title!!.setText(post.firstName + " " + post.lastName)
+        holder.body!!.setText("Age : " + post.age)
 
         holder.layout!!.setOnClickListener {
             listener.itemDetail(post.id)
@@ -47,6 +47,7 @@ class ContactAdapter(private val context: Context, private val list: MutableList
     }
 
     fun removeAt(position: Int) {
+        listener.itemRemoveClick(list[position])
         list.removeAt(position)
         notifyItemRemoved(position)
     }
