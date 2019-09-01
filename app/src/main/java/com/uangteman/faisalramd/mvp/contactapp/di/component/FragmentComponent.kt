@@ -3,6 +3,7 @@ package com.uangteman.faisalramd.mvp.contactapp.di.component
 import com.uangteman.faisalramd.mvp.contactapp.di.module.FragmentModule
 import com.uangteman.faisalramd.mvp.contactapp.ui.contact.AddContactFragment
 import com.uangteman.faisalramd.mvp.contactapp.ui.contact.ContactFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.EditContactFragment
 import dagger.Component
 
 /**
@@ -13,6 +14,8 @@ import dagger.Component
 interface FragmentComponent {
 
     fun inject(addContactFragment: AddContactFragment)
+
+    fun inject(editContactFragment: EditContactFragment)
 
     fun inject(listFragment: ContactFragment)
 

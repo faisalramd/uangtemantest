@@ -9,13 +9,14 @@ import com.uangteman.faisalramd.mvp.contactapp.di.component.DaggerActivityCompon
 import com.uangteman.faisalramd.mvp.contactapp.di.module.ActivityModule
 import com.uangteman.faisalramd.mvp.contactapp.ui.contact.AddContactFragment
 import com.uangteman.faisalramd.mvp.contactapp.ui.contact.ContactFragment
+import com.uangteman.faisalramd.mvp.contactapp.ui.contact.EditContactFragment
 import javax.inject.Inject
 
 /**
  * Created by ogulcan on 07/02/2018.
  * modified by faisalramd on 01/09/2019
  */
-class MainActivity: AppCompatActivity(), MainContract.View {
+class MainActivity: AppCompatActivity(), MainContract.View, ContactFragment.onItemClickListener {
 
     @Inject lateinit var presenter: MainContract.Presenter
 
@@ -33,22 +34,20 @@ class MainActivity: AppCompatActivity(), MainContract.View {
     }
 
     override fun showAddContactFragment() {
-        if (supportFragmentManager.findFragmentByTag(AddContactFragment.TAG) == null) {
-            supportFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
-                    .replace(R.id.frame, AddContactFragment().newInstance(), AddContactFragment.TAG)
-                    .commit()
-        } else {
-            // Maybe an animation like shake hello text
-        }
+        supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
+                .replace(R.id.frame, AddContactFragment().newInstance(), AddContactFragment.TAG)
+                .commit()
     }
 
     override fun showListFragment() {
+        val contactFragment = ContactFragment().newInstance()
+        contactFragment.listener = this
         supportFragmentManager.beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
-                .replace(R.id.frame, ContactFragment().newInstance(), ContactFragment.TAG)
+                .replace(R.id.frame, contactFragment, ContactFragment.TAG)
                 .commit()
     }
 
@@ -69,6 +68,14 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun itemDetail(postId: String) {
+        supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
+                .replace(R.id.frame, EditContactFragment().newInstance(), EditContactFragment.TAG)
+                .commit()
     }
 
     override fun onBackPressed() {

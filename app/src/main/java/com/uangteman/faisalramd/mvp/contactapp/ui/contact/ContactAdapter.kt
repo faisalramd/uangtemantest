@@ -34,7 +34,7 @@ class ContactAdapter(private val context: Context, private val list: MutableList
 
         // holder!!.bind(post)
         holder.title!!.setText(post.firstName + " " + post.lastName)
-        holder.body!!.setText("Age : " + post.age)
+        holder.body!!.setText("Age : " + post.age + "\n")
 
         holder.layout!!.setOnClickListener {
             listener.itemDetail(post.id)

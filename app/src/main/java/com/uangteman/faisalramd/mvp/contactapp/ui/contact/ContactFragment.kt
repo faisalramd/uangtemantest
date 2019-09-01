@@ -28,6 +28,8 @@ class ContactFragment: Fragment(), ContactContract.View, ContactAdapter.onItemCl
 
     private lateinit var rootView: View
 
+    public lateinit var listener: onItemClickListener
+
     fun newInstance(): ContactFragment {
         return ContactFragment()
     }
@@ -85,12 +87,11 @@ class ContactFragment: Fragment(), ContactContract.View, ContactAdapter.onItemCl
     override fun saveDataSuccess() { }
 
     override fun itemRemoveClick(contact: Contact) {
-        Log.e("ss", "sss" + contact.firstName)
         presenter.deleteItem(contact.id)
     }
 
     override fun itemDetail(postId: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        listener.itemDetail(postId)
     }
 
     private fun injectDependency() {
@@ -107,5 +108,9 @@ class ContactFragment: Fragment(), ContactContract.View, ContactAdapter.onItemCl
 
     companion object {
         val TAG: String = "ContactFragment"
+    }
+
+    interface onItemClickListener {
+        fun itemDetail(postId : String)
     }
 }
